@@ -223,19 +223,17 @@ model_eval <- function(df) {
     prediction <- df$Prediction[i]
     result <- df$Result[i]
     
-    # Satzergebnisse extrahieren
+    # Set results
     p_a <- as.numeric(substr(prediction, 1, 1))
     p_b <- as.numeric(substr(prediction, 3, 3))
     
     r_a <- as.numeric(substr(result, 1, 1))
     r_b <- as.numeric(substr(result, 3, 3))
     
-    # Richtiger Sieger?
     if ((p_a > p_b && r_a > r_b) || (p_a < p_b && r_a < r_b)) {
       correct_winner <- correct_winner + 1
     }
     
-    # Exaktes Ergebnis?
     if (p_a == r_a && p_b == r_b) {
       correct_result <- correct_result + 1
     }
@@ -288,13 +286,13 @@ round_winners <- function(df, col_name = "Result") {
     scores <- as.numeric(unlist(strsplit(set, ":")))
     
     if (length(scores) != 2 || any(is.na(scores))) {
-      winner <- c(winner, NA)  # Fehlerhafte oder leere Einträge
+      winner <- c(winner, NA)
     } else if (scores[1] == 3) {
       winner <- c(winner, df$Player1[i])
     } else if (scores[2] == 3) {
       winner <- c(winner, df$Player2[i])
     } else {
-      winner <- c(winner, NA)  # Kein gültiges Ergebnis
+      winner <- c(winner, NA)
     }
   }
   
